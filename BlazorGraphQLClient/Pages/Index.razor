@@ -1,0 +1,43 @@
+﻿@page "/"
+
+<style>
+    body {
+        background-color: whitesmoke;
+    }
+</style>
+
+<h1>Blazor WASM - GraphQLClient Spike</h1>
+
+<button class="btn btn-primary" @onclick="() => QueryGraphQLClicked()">Query GraphQL</button>
+<button style="margin-left:12px" class="btn btn-primary" @onclick="() => QueryGraphQLClicked(submitBadQuery: true)">Bad Query GraphQL</button>
+
+<div style="margin-top:24px">
+    <select @bind="SelectedCountryAlpha3Code">
+        @foreach (var item in this.CountryItems) {
+            <option value="@item.Alpha3Code">@item.Name</option>
+        }
+    </select>
+</div>
+
+<div style="margin-top:24px">
+
+    @if (this.Country != null) {
+        <h3>@this.Country.Name</h3>
+        <p>Capital:  @this.Country.Capital</p>
+        <div>
+            <img src="@this.Country.Flag.SvgFile" width="300" />
+        </div>
+    }
+
+    @if (this.GraphQLErrors != null) {
+        <h3 style="color:red">GraphQL Errors</h3>
+        @foreach (var item in this.GraphQLErrors) {
+            <p>@item.Message</p>
+        }
+    }
+
+    @if (this.ExceptionMessage != null) {
+        <h3 style="color:red">Exception</h3>
+        <p>@this.ExceptionMessage</p>
+    }
+</div>
